@@ -1,17 +1,17 @@
 import socket
 
 ip = "scanme.nmap.org"
-portas = [22, 80, 443, 8080]
+ports = [22, 80, 443, 8080]
 
-for porta in portas:
+for port in ports:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.settimeout(1)
 
-    resultado = sock.connect_ex((ip, porta))
+    result = sock.connect_ex((ip, port))
 
-    if resultado == 0:
-        print(f"Porta {porta} está ABERTA")
+    if result == 0:
+        print(f"Port {port} is OPEN")
     else:
-        print(f"Porta {porta} está FECHADA")
+        print(f"Port {port} is CLOSED")
 
     sock.close()
