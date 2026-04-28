@@ -8,9 +8,9 @@ PortOracle is a simple yet effective network utility designed to scan and detect
 
 <h1>Features</h1>
 
-- Simple and straightforward port scanning
-- Fast scanning with configurable timeout
-- Clear output reporting open/closed ports
+- Simple and straightforward
+- Configurable timeout between scans
+- Clear output reporting open ports exported to a JSON
 - Customizable target hosts and ports
 
 ## Requirements
