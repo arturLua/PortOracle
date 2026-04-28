@@ -29,24 +29,40 @@ cd PortOracle
 
 ## Usage
 
-Run the scanner:
+Run the scanner with command-line arguments:
 
 ```bash
-python main.py
+python main.py --ip <target_ip_or_hostname> [--start <start_port>] [--end <end_port>]
+```
+
+### Examples
+
+- Scan ports 1-1024 on a specific host:
+```bash
+python main.py --ip scanme.nmap.org
+```
+
+- Scan a custom port range:
+```bash
+python main.py --ip 192.168.1.1 --start 20 --end 100
+```
+
+- Scan a single port:
+```bash
+python main.py --ip example.com --start 80 --end 80
 ```
 
 ### Customizing the Scan
 
-Edit `main.py` to modify the target and ports:
+The scanner accepts the following arguments:
 
-```python
-ip = "scanme.nmap.org"  # Change target host
-ports = [22, 80, 443, 8080]  # Change ports to scan
-```
+- `--ip`: Target IP address or hostname (required)
+- `--start`: Starting port number (default: 1)
+- `--end`: Ending port number (default: 1024)
 
-**Current configuration:**
-- **Target:** `scanme.nmap.org` (a legal testing host provided by nmap.org)
-- **Ports:** 22 (SSH), 80 (HTTP), 443 (HTTPS), 8080 (HTTP alternate)
+**Current default configuration:**
+- **Target:** Specified via `--ip` argument
+- **Port range:** 1-1024
 - **Timeout:** 1 second per connection attempt
 
 ### Output Example
@@ -56,15 +72,16 @@ Port 22 is OPEN
 Port 80 is OPEN
 Port 443 is CLOSED
 Port 8080 is CLOSED
+...
 ```
 
 ## Configuration
 
 To customize the scanner for your needs:
 
-1. **Change the target IP/hostname:** Modify the `ip` variable
-2. **Change ports:** Update the `ports` list with desired port numbers
-3. **Adjust timeout:** Modify `sock.settimeout(1)` to a different value (in seconds)
+1. **Change the target IP/hostname:** Use the `--ip` argument
+2. **Change port range:** Use `--start` and `--end` arguments
+3. **Adjust timeout:** Currently fixed at 1 second; modify `sock.settimeout(1)` in `main.py` if needed
 
 ## Legal Notice
 
