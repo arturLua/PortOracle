@@ -9,8 +9,9 @@ PortOracle is a simple yet effective network utility designed to scan and detect
 <h1>Features</h1>
 
 - Simple and straightforward
-- Configurable timeout between scans
-- Clear output reporting open ports exported to a JSON
+- Fast concurrent scanning using multiple threads for efficient port detection
+- Configurable timeout for connection attempts
+- Clear output reporting open ports to console and exported to a JSON file
 - Customizable target hosts and ports
 
 ## Requirements
@@ -75,13 +76,30 @@ Port 8080 is CLOSED
 ...
 ```
 
+### JSON Output
+
+Results are saved to `results.json` with the following structure:
+
+```json
+{
+    "ip": "scanme.nmap.org",
+    "open_ports": [
+        {
+            "port": 22,
+            "status": "OPEN"
+        }
+    ]
+}
+```
+
 ## Configuration
 
 To customize the scanner for your needs:
 
 1. **Change the target IP/hostname:** Use the `--ip` argument
 2. **Change port range:** Use `--start` and `--end` arguments
-3. **Adjust timeout:** Currently fixed at 1 second; modify `sock.settimeout(1)` in `main.py` if needed
+3. **Adjust timeout:** Currently fixed at 1 second per connection attempt; modify `sock.settimeout(1)` in `main.py` if needed
+4. **Concurrency:** The scanner uses currently up to 100 concurrent threads for faster scanning; modify `max_workers=100` in `main.py` if needed
 
 ## Legal Notice
 
