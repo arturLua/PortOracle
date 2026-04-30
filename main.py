@@ -1,6 +1,7 @@
 import socket
 import argparse
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 parser = argparse.ArgumentParser(description="PortOracle - Port Scanner")
 parser.add_argument("--ip", required=True, help="Target IP or hostname")
@@ -13,14 +14,17 @@ def scan_port(ip, port):
     sock.settimeout(1)
     result = sock.connect_ex((ip, port))
     sock.close()
-    return result == 0
+    return port, result == 0
     
 open_ports = []
 
-for port in range(args.start, args.end + 1):
-    if scan_port(args.ip, port):
-        print(f"Port {port} is OPEN")
-        open_ports.append({"port": port, "status": "OPEN"})
+with ThreadPoolExecutor(max_workers=100) as executor:
+    futures = {executor.submit(scan_port, args.ip, port): port for port in range(args.start, args.end + 1)}
+    for future in as_completed(futures):
+        port, is_open = future.result()
+        if is_open:
+            print(f"Port {port} is OPEN")
+            open_ports.append({"port": port, "status": "OPEN"})
 
 with open("results.json", "w") as file:
     json.dump({"ip": args.ip, "open_ports": open_ports}, file, indent=4)
