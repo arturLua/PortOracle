@@ -86,7 +86,8 @@ Results are saved to `results.json` with the following structure:
     "open_ports": [
         {
             "port": 22,
-            "status": "OPEN"
+            "status": "OPEN",
+            "service": "ssh"
         }
     ]
 }
