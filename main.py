@@ -19,14 +19,22 @@ def scan_port(ip, port):
 open_ports = []
 
 with ThreadPoolExecutor(max_workers=100) as executor:
-    futures = {executor.submit(scan_port, args.ip, port): port for port in range(args.start, args.end + 1)}
-    for future in as_completed(futures):
-        port, is_open = future.result()
-        if is_open:
-            print(f"Port {port} is OPEN")
-            open_ports.append({"port": port, "status": "OPEN"})
+    try:
+        futures = {executor.submit(scan_port, args.ip, port): port for port in range(args.start, args.end + 1)}
+        for future in as_completed(futures):
+            port, is_open = future.result()
+            if is_open:
+                print(f"Port {port} is OPEN")
+                open_ports.append({"port": port, "status": "OPEN"})
+
+    except socket.gaierror:
+        print(f"Error: Unable to resolve hostname '{args.ip}'")
+        exit(1)
 
 with open("results.json", "w") as file:
     json.dump({"ip": args.ip, "open_ports": open_ports}, file, indent=4)
 
 print(f"\nResults saved to results.json")
+
+
+
