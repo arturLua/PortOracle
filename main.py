@@ -24,8 +24,9 @@ with ThreadPoolExecutor(max_workers=100) as executor:
         for future in as_completed(futures):
             port, is_open = future.result()
             if is_open:
-                print(f"Port {port} is OPEN")
-                open_ports.append({"port": port, "status": "OPEN"})
+                service_name = socket.getservbyport(port, 'tcp')
+                print(f"Port {port} is OPEN ({service_name})")
+                open_ports.append({"port": port, "status": "OPEN", "service": service_name})
 
     except socket.gaierror:
         print(f"Error: Unable to resolve hostname '{args.ip}'")
