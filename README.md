@@ -33,7 +33,7 @@ cd PortOracle
 Run the scanner with command-line arguments:
 
 ```bash
-python main.py --ip <target_ip_or_hostname> [--start <start_port>] [--end <end_port>]
+python main.py --ip <target_ip_or_hostname> [--start <start_port>] [--end <end_port>] [--timeout <seconds>]
 ```
 
 ### Examples
@@ -60,11 +60,12 @@ The scanner accepts the following arguments:
 - `--ip`: Target IP address or hostname (required)
 - `--start`: Starting port number (default: 1)
 - `--end`: Ending port number (default: 1024)
+- `--timeout`: Timeout (in seconds) that the scanner will operate (default: 1.0s)
 
 **Current default configuration:**
 - **Target:** Specified via `--ip` argument
 - **Port range:** 1-1024
-- **Timeout:** 1 second per connection attempt
+- **Timeout:** Specified via `--timeout` argument
 
 ### Output Example
 
@@ -99,7 +100,7 @@ To customize the scanner for your needs:
 
 1. **Change the target IP/hostname:** Use the `--ip` argument
 2. **Change port range:** Use `--start` and `--end` arguments
-3. **Adjust timeout:** Currently fixed at 1 second per connection attempt; modify `sock.settimeout(1)` in `main.py` if needed
+3. **Adjust timeout:** Use `--timeout` argument. Currently fixed at 1 second per connection attempt
 4. **Concurrency:** The scanner uses currently up to 100 concurrent threads for faster scanning; modify `max_workers=100` in `main.py` if needed
 
 ## Legal Notice
