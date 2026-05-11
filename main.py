@@ -21,15 +21,21 @@ def scan_port(ip, port, timeout):
 open_ports = []
 
 with ThreadPoolExecutor(max_workers=100) as executor:
+    
     try:
         futures = {executor.submit(scan_port, args.ip, port, args.timeout): port for port in range(args.start, args.end + 1)}
+
         for future in as_completed(futures):
             port, is_open = future.result()
             if is_open:
+
                 try:
                     service_name = socket.getservbyport(port, 'tcp')
-                except OSError:
+
+                except OSError as e:
+                    print(f"Warning: Could not determine service for port {port}: {e}")
                     service_name = "unknown"
+                
                 print(f"Port {port} is OPEN ({service_name})")
                 open_ports.append({"port": port, "status": "OPEN", "service": service_name})
 
