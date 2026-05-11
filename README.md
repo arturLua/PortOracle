@@ -107,4 +107,4 @@ To customize the scanner for your needs:
 > [!NOTE] 
 > Only scan networks and hosts for which you have **EXPLICIT PERMISSION**. Unauthorized port scanning may be illegal in your jurisdiction. This tool is provided for educational and authorized security testing purposes only.
 
-The default configuration scans `scanme.nmap.org`, which is provided by nmap.org specifically for testing purposes.
+The examples given here scans `scanme.nmap.org`, which is provided by nmap.org specifically for testing purposes.
