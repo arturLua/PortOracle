@@ -21,7 +21,7 @@ def scan_port(ip, port, timeout):
 open_ports = []
 
 with ThreadPoolExecutor(max_workers=100) as executor:
-    
+
     try:
         futures = {executor.submit(scan_port, args.ip, port, args.timeout): port for port in range(args.start, args.end + 1)}
 
@@ -45,5 +45,4 @@ with ThreadPoolExecutor(max_workers=100) as executor:
 
 with open("results.json", "w") as file:
     json.dump({"ip": args.ip, "open_ports": open_ports}, file, indent=4)
-
-print(f"\nResults saved to results.json")
+    print(f"\nResults saved to results.json")
