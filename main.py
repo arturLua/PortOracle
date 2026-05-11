@@ -24,7 +24,10 @@ with ThreadPoolExecutor(max_workers=100) as executor:
         for future in as_completed(futures):
             port, is_open = future.result()
             if is_open:
-                service_name = socket.getservbyport(port, 'tcp')
+                try:
+                    service_name = socket.getservbyport(port, 'tcp')
+                except OSError:
+                    service_name = "unknown"
                 print(f"Port {port} is OPEN ({service_name})")
                 open_ports.append({"port": port, "status": "OPEN", "service": service_name})
 
@@ -36,6 +39,3 @@ with open("results.json", "w") as file:
     json.dump({"ip": args.ip, "open_ports": open_ports}, file, indent=4)
 
 print(f"\nResults saved to results.json")
-
-
-
