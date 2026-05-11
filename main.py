@@ -8,6 +8,7 @@ parser.add_argument("--ip", required=True, help="Target IP or hostname")
 parser.add_argument("--start", type=int, default=1, help="Start port")
 parser.add_argument("--end", type=int, default=1024, help="End port")
 parser.add_argument("--timeout", type=float, default=1.0, help="Timeout for each port scan in seconds")
+parser.add_argument("--output", default="results.json", help="Output file for results (default: results.json)")
 
 args = parser.parse_args()
 
@@ -43,6 +44,6 @@ with ThreadPoolExecutor(max_workers=100) as executor:
         print(f"Error: Unable to resolve hostname '{args.ip}'")
         exit(1)
 
-with open("results.json", "w") as file:
+with open(args.output, "w") as file:
     json.dump({"ip": args.ip, "open_ports": open_ports}, file, indent=4)
-    print(f"\nResults saved to results.json")
+    print(f"\nResults saved to {args.output}")
