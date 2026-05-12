@@ -44,6 +44,8 @@ with ThreadPoolExecutor(max_workers=100) as executor:
         print(f"Error: Unable to resolve hostname '{args.ip}'")
         exit(1)
 
+open_ports.sort(key=lambda x: x["port"])
+
 with open(args.output, "w") as file:
     json.dump({"ip": args.ip, "open_ports": open_ports}, file, indent=4)
     print(f"\nResults saved to {args.output}")
