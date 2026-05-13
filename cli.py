@@ -35,7 +35,7 @@ def main():
     open_ports = scanner.run_scan(resolved_ip, args.start, args.end, args.timeout)
 
     file.save_results(args.output, {"ip": resolved_ip, "open_ports": open_ports})
-    print(f"Scan completed. Results saved to {args.output} as JSON.")
+    print(f"\nScan completed. Results saved to '{args.output}'.")
 
 if __name__ == "__main__":
     main()
