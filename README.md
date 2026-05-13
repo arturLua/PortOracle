@@ -1,18 +1,8 @@
 <h1 align="center">PortOracle</h1>
 
-###
-
 <p>
-PortOracle is a simple yet effective network utility designed to scan and detect the status of specific ports on a target machine. It uses Python's `socket` library to perform TCP connection attempts and reports whether each port is open or closed.
+PortOracle is a network port scanner built with Python. It uses concurrent threads to perform TCP connection attempts and reports open ports along with their associated services.
 </p>
-
-<h1>Features</h1>
-
-- Simple and straightforward
-- Fast concurrent scanning using multiple threads for efficient port detection
-- Configurable timeout for connection attempts
-- Clear output reporting open ports to console and exported to a JSON file
-- Customizable target hosts and ports
 
 ## Requirements
 
@@ -26,64 +16,42 @@ git clone <repository_url>
 cd PortOracle
 ```
 
-2. No additional packages need to be installed.
+2. No additional packages required.
 
 ## Usage
 
-Run the scanner with command-line arguments:
-
 ```bash
-python main.py --ip <target_ip_or_hostname> [--start <start_port>] [--end <end_port>] [--timeout <seconds>]
+python cli.py --ip <target_ip_or_hostname> [--start <start_port>] [--end <end_port>] [--timeout <seconds>] [--output <file>]
 ```
 
-### Examples
-
-- Scan ports 1-1024 on a specific host:
-```bash
-python main.py --ip scanme.nmap.org
-```
-
-- Scan a custom port range:
-```bash
-python main.py --ip 192.168.1.1 --start 20 --end 100
-```
-
-- Scan a single port:
-```bash
-python main.py --ip example.com --start 80 --end 80
-```
-
-### Customizing the Scan
-
-The scanner accepts the following arguments:
+### Arguments
 
 - `--ip`: Target IP address or hostname (required)
 - `--start`: Starting port number (default: 1)
 - `--end`: Ending port number (default: 1024)
-- `--timeout`: Timeout (in seconds) that the scanner will operate (default: 1.0s)
+- `--timeout`: Connection timeout in seconds (default: 1.0)
+- `--output`: Output file path (default: results.json)
 
-**Current default configuration:**
-- **Target:** Specified via `--ip` argument
-- **Port range:** 1-1024
-- **Timeout:** Specified via `--timeout` argument
+### Examples
 
-### Output Example
+```bash
+# Scan default port range (1-1024)
+python cli.py --ip scanme.nmap.org
 
-```
-Port 22 is OPEN
-Port 80 is OPEN
-Port 443 is CLOSED
-Port 8080 is CLOSED
-...
+# Scan custom port range
+python cli.py --ip 192.168.1.1 --start 20 --end 500
+
+# Scan with custom timeout and output file
+python cli.py --ip 192.168.1.1 --timeout 0.5 --output scan.json
 ```
 
 ### JSON Output
 
-Results are saved to `results.json` with the following structure:
+Results are saved with the following structure:
 
 ```json
 {
-    "ip": "scanme.nmap.org",
+    "ip": "192.168.1.1",
     "open_ports": [
         {
             "port": 22,
@@ -94,18 +62,9 @@ Results are saved to `results.json` with the following structure:
 }
 ```
 
-## Configuration
-
-To customize the scanner for your needs:
-
-1. **Change the target IP/hostname:** Use the `--ip` argument
-2. **Change port range:** Use `--start` and `--end` arguments
-3. **Adjust timeout:** Use `--timeout` argument. Currently fixed at 1 second per connection attempt
-4. **Concurrency:** The scanner uses currently up to 100 concurrent threads for faster scanning; modify `max_workers=100` in `main.py` if needed
-
 ## Legal Notice
 
-> [!NOTE] 
+> [!NOTE]
 > Only scan networks and hosts for which you have **EXPLICIT PERMISSION**. Unauthorized port scanning may be illegal in your jurisdiction. This tool is provided for educational and authorized security testing purposes only.
 
-The examples given here scans `scanme.nmap.org`, which is provided by nmap.org specifically for testing purposes.
+The examples use `scanme.nmap.org`, provided by nmap.org specifically for testing purposes.
