@@ -8,6 +8,6 @@ def resolve_hostname(hostname):
 
 def get_service_name(port):
     try:
-        service_name = socket.getservbyport(port, 'tcp')
+        return socket.getservbyport(port, 'tcp')
     except OSError:
         return "unknown"
