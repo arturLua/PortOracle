@@ -3,7 +3,25 @@ from app.utils import network
 from app.services import scanner
 from app.utils import file
 
+ASCII_ART = """\n\n
+                                      -      +####@####= .*:     -                                  
+                                 -#: .:@@@@@@%%%%%%%%%%@@@@@@@@%    ..                              
+                             :+.  =@@@@===.                -=+@@@%*%=:                              
+                                @@@@#                            @@@..*#                            
+                           -***@@%:            :%@@@#.            -@@%:                             
+                             -@@@             @@@: =@@#             @@@                             
+                         =+++*@@              @@=   #@#             :@@=+++-                        
+                             -@@%             .@@@@@@@.             @@@                             
+                           :==#@@#:             =***:             :@@%%=-                           
+                          ...   :@@%#                            @@@.   :.                          
+                             .-##**@@@@--:                 :-=@@@@-:#:                              
+                                     .-@@@@@@%#########%@@@@@%*%    :%:                             
+                                    :%#    .=#####@####=  :#.  +%:                                  
+                                    \n\n
+"""
+
 def main():
+    print(ASCII_ART)
     parser = argparse.ArgumentParser(description="PortOracle - Port Scanner")
     parser.add_argument("--ip", required=True, help="Target IP or hostname")
     parser.add_argument("--start", type=int, default=1, help="Start port")
