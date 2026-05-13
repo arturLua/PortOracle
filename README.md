@@ -4,6 +4,19 @@
 PortOracle is a network port scanner built with Python. It uses concurrent threads to perform TCP connection attempts and reports open ports along with their associated services.
 </p>
 
+## Project Structure
+```bash
+portoracle/
+├── app/
+│   ├── config.py          # Default configuration constants
+│   ├── services/
+│   │   └── scanner.py     # Core scanning logic
+│   └── utils/
+│       ├── network.py     # Hostname resolution and service detection
+│       └── file.py        # JSON output handling
+└── cli.py                 # Entry point
+```
+
 ## Requirements
 
 - Python 3.6+
