@@ -10,5 +10,4 @@ def get_service_name(port):
     try:
         service_name = socket.getservbyport(port, 'tcp')
     except OSError:
-        service_name = "unknown"
-        return service_name
+        return "unknown"
